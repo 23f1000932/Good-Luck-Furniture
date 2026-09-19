@@ -14,7 +14,7 @@ def require_admin(f):
     def decorated(*args, **kwargs):
         try:
             verify_jwt_in_request()
-            user_id = get_jwt_identity()
+            user_id = int(get_jwt_identity())
             user = AdminUser.query.get(user_id)
             if not user or not user.is_active:
                 return error_response('UNAUTHORIZED', 'Access denied', 401)

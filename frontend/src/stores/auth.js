@@ -8,7 +8,9 @@ export const useAuthStore = defineStore('auth', () => {
   const loading = ref(false)
   const error = ref(null)
 
-  const isAuthenticated = computed(() => !!token.value && !!user.value)
+  // A token in storage means we are authenticated — user data loads lazily via fetchMe.
+  // We don't require user.value to be loaded yet, to avoid a race on page refresh.
+  const isAuthenticated = computed(() => !!token.value)
 
   async function login(email, password) {
     loading.value = true
